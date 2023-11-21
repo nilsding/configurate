@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "ruby2_keywords"
+
 module Configurate
   # This object builds a chain of configuration providers to try to find
   # the value of a setting.
@@ -15,7 +17,7 @@ module Configurate
     # @param *args the arguments passed to the providers constructor
     # @raise [ArgumentError] if an invalid provider is given
     # @return [void]
-    def add_provider(provider, *args)
+    ruby2_keywords def add_provider(provider, *args)
       unless provider.respond_to?(:instance_methods) && provider.instance_methods.include?(:lookup)
         raise ArgumentError, "the given provider does not respond to lookup"
       end
@@ -31,7 +33,7 @@ module Configurate
     # @param ... further args passed to the provider
     # @return [Array,Hash,String,Boolean,nil] whatever the responding
     #   provider provides is casted to a {String}, except for some special values
-    def lookup(setting, *args)
+    ruby2_keywords def lookup(setting, *args)
       setting = SettingPath.new setting if setting.is_a? String
       @provider.each do |provider|
         begin
